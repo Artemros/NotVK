@@ -1,9 +1,4 @@
-package com.notvk.NotVK.homepage;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+package com.notvk.server.dto;
 
 public class WallTextDTO {
     public WallTextDTO(Long id, String text, String time) {

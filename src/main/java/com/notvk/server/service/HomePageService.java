@@ -1,4 +1,4 @@
-package com.notvk.NotVK.homepage;
+package com.notvk.server.service;
 
 public interface HomePageService {
     void init();

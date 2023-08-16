@@ -1,15 +1,9 @@
-package com.notvk.NotVK.homepage;
+package com.notvk.server.model;
 
 import jakarta.persistence.*;
 
 @Entity
 public class WallText {
-
-    public WallText(Long id, String text, String time) {
-        this.id = id;
-        this.text = text;
-        this.time = time;
-    }
 
     public Long getId() {
         return id;
@@ -27,6 +21,20 @@ public class WallText {
 
     @Column(name = "time")
     private String time;
+
+
+    public UserInfo getUser() {
+        return user;
+    }
+
+    public void setUser(UserInfo user) {
+        this.user = user;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private UserInfo user;
+
     public WallText() {
     }
 

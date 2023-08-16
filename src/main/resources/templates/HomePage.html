@@ -7,16 +7,18 @@
 
 
 <div>
-    <form action="#" th:action="@{/acceptFormInput}" th:object="${form}" method="post">
+    <form action="#" th:action="@{/acceptFormInput?id=} + ${id}" th:object="${form}" method="post">
         <p>Message: <input type="text" th:field="*{text}"/></p>
         <p><input type="submit" value="Submit"/></p>
+        <p>This is a paragraph.</p>
     </form>
 </div>
 
 <div>
     <ul>
         <li th:each="text : ${texts}">
-            <a th:text="${text.text}"/>
+            <a th:text="${text.text}"/>,
+            <a th:text="${text.time}"/>
         </li>
     </ul>
 </div>

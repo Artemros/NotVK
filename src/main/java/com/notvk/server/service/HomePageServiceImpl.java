@@ -1,5 +1,6 @@
-package com.notvk.NotVK.homepage;
+package com.notvk.server.service;
 
+import com.notvk.server.service.HomePageService;
 import org.springframework.stereotype.Service;
 
 @Service

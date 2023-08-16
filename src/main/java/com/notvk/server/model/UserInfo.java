@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "USERS_INFO")
 public class UserInfo {
 
     public Long getId() {
@@ -30,10 +31,28 @@ public class UserInfo {
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private List<WallText> wallText;
+
+    @Column
+    private String name;
+
+    @Column
+    private String status;
     public UserInfo() {
     }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public String getStatus() {
+        return status;
+    }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

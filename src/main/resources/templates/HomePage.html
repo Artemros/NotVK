@@ -1,6 +1,6 @@
-<html xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <body>
-
+<p>User: <span th:text="${name}"></span></p>
 <div th:if="${message}">
     <h2 th:text="${message}"/>
 </div>
@@ -8,6 +8,7 @@
 
 <div>
     <form action="#" th:action="@{/acceptFormInput?id=} + ${id}" th:object="${form}" method="post">
+
         <p>Message: <input type="text" th:field="*{text}"/></p>
         <p><input type="submit" value="Submit"/></p>
         <p>This is a paragraph.</p>

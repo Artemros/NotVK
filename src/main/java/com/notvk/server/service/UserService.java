@@ -4,12 +4,12 @@ import com.notvk.server.model.UserInfo;
 import com.notvk.server.model.WallText;
 import com.notvk.server.repository.UserRepository;
 import com.notvk.server.repository.WallTextRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -25,37 +25,36 @@ public class UserService {
     private final WallTextRepository wallTextRepository;
 
 
-    public List<WallText> getWallTextById(Long id){
-        Optional<UserInfo> userInfo = userRepository.findById(id);
-        List<WallText> texts = new ArrayList<>();
-        if(userInfo.isPresent()) {
-            texts = userRepository.findById(id).get().getWallText();
+    public List<WallText> getWallTextById(Long id) {
+        if (userRepository.findById(id).isPresent()) {
+            UserInfo userInfo = userRepository.findById(id).get();
+            List<WallText> texts;
+            texts = userInfo.getWallText();
+            return texts;
+        }else{
+            new EntityNotFoundException("User with id " + id + " not found");
         }
-        return texts;
+        return null;
     }
 
-    public void addWallTextById(Long id,WallText wallText){
-        Optional<UserInfo> userInfo = userRepository.findById(id);
-        Iterable<UserInfo> all = userRepository.findAll();
-        List<WallText> texts = new ArrayList<>();
-        wallTextRepository.save(wallText);
-        if(userInfo.isPresent()) {
-            texts = userInfo.get().getWallText();
+    public void addWallTextById(Long id, WallText wallText) {
+        if (userRepository.findById(id).isPresent()) {
+            UserInfo userInfo = userRepository.findById(id).get();
+            List<WallText> texts;
+            wallTextRepository.save(wallText);
+            texts = userInfo.getWallText();
             texts.add(wallText);
-            UserInfo newUserInfo = new UserInfo();
             texts.add(wallText);
-            newUserInfo.setWallText(texts);
-            newUserInfo.setId(id);
-            userRepository.save(newUserInfo);
+            userInfo.setWallText(texts);
+            userInfo.setId(id);
 
-        } else{
-            UserInfo newUserInfo = new UserInfo();
-            List<WallText> wallTextListNewUser = new ArrayList<>();
-            wallTextListNewUser.add(wallText);
-            newUserInfo.setWallText(wallTextListNewUser);
-            newUserInfo.setId(id);
-            userRepository.save(newUserInfo);
+        } else {
+            new EntityNotFoundException("User with id " + id + " not found");
         }
 
+    }
+
+    public UserInfo getUserById(long id) {
+        return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User with id " + id + " not found"));
     }
 }

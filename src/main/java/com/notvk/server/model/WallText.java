@@ -2,6 +2,8 @@ package com.notvk.server.model;
 
 import jakarta.persistence.*;
 
+import java.sql.Timestamp;
+
 @Entity
 public class WallText {
 
@@ -19,8 +21,10 @@ public class WallText {
     @Column(name = "text")
     private String text;
 
+
+    @Basic
     @Column(name = "time")
-    private String time;
+    private java.sql.Timestamp time;
 
 
     public UserInfo getUser() {
@@ -46,11 +50,13 @@ public class WallText {
         this.text = text;
     }
 
-    public String getTime() {
+    public Timestamp getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Timestamp time) {
         this.time = time;
     }
+
+
 }

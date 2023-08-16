@@ -4,9 +4,11 @@ import com.notvk.server.model.WallText;
 
 public class UserDTO {
 
-    public UserDTO(Long id, WallText wallText) {
+    public UserDTO(Long id, WallText wallText, String name, String status) {
         this.id = id;
         this.wallText = wallText;
+        this.name = name;
+        this.status = status;
     }
 
     public UserDTO() {
@@ -28,6 +30,28 @@ public class UserDTO {
         this.wallText = wallText;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     private Long id;
     private WallText wallText;
+
+
+    private String name;
+
+
+    private String status;
 }

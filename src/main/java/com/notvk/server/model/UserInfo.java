@@ -24,19 +24,6 @@ public class UserInfo {
         this.wallText = wallText;
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
-
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private List<WallText> wallText;
-
-    @Column
-    private String name;
-
-    @Column
-    private String status;
     public UserInfo() {
     }
 
@@ -55,4 +42,41 @@ public class UserInfo {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private List<WallText> wallText;
+
+    @Column
+    private String name;
+
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "id=" + id +
+                ", wallText=" + wallText +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
+
+    @Column
+    private String password;
+
+    @Column
+    private String status;
+
 }

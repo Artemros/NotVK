@@ -57,4 +57,8 @@ public class UserService {
     public UserInfo getUserById(long id) {
         return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User with id " + id + " not found"));
     }
+
+    public UserInfo registerNewUser(UserInfo newUser){
+        return userRepository.save(newUser);
+    }
 }

@@ -29,7 +29,7 @@ public class RegistrationController {
     private final UserService userService;
 
     @GetMapping("")
-    public String goToHomePage(Model model) throws IOException {
+    public String goToRegistrationPage(Model model){
         model.addAttribute("name",new String());
         model.addAttribute("password",new String());
         model.addAttribute("form",new UserInfo());
@@ -37,9 +37,8 @@ public class RegistrationController {
     }
 
     @PostMapping("/a")
-    public String acceptFormInput(Model model, @ModelAttribute UserInfo userInfo) {
+    public String acceptRegistrationFormInput(Model model, @ModelAttribute UserInfo userInfo) {
         UserInfo registeredUser = new UserInfo();
-        //String gotText = Objects.requireNonNull(model.getAttribute("name")).toString();
         registeredUser.setName(userInfo.getName());
         registeredUser.setPassword(userInfo.getPassword());
         UserInfo newUser = userService.registerNewUser(registeredUser);

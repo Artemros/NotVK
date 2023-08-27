@@ -1,11 +1,13 @@
-<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
 <p>User: <span th:text="${name}"></span></p>
 <div th:if="${message}">
     <h2 th:text="${message}"/>
 </div>
 
+<div sec:authentication="name">
 
+</div>
 <div>
     <form action="#" th:action="@{/acceptFormInput?id=} + ${id}" th:object="${form}" method="post">
 

@@ -6,6 +6,8 @@ import com.notvk.server.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,10 +29,24 @@ public class UserPageController {
 
     private final UserService userService;
 
+    @GetMapping("/")
+    public String goToHomePage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+        if (userDetails == null) {
+            return "redirect:login";
+        } else {
+            UserInfo userByUsername = userService.getUserByUsername(userDetails.getUsername());
+            return returnUserPage(model, userByUsername);
+        }
+    }
+
     @GetMapping("/id{id}")
-    public String goToHomePage(@ModelAttribute WallText wallText, @PathVariable("id") long id, Model model) throws IOException {
+    public String goToUserById(@ModelAttribute WallText wallText, @PathVariable("id") long id, Model model, @AuthenticationPrincipal UserDetails userDetails){
         UserInfo user = userService.getUserById(id);
-        model.addAttribute("id", id);
+        return returnUserPage(model, user);
+    }
+
+    private static String returnUserPage(Model model, UserInfo user) {
+        model.addAttribute("id", user.getId());
         model.addAttribute("name", user.getName());
         model.addAttribute("form", new WallText());
         model.addAttribute("texts", user.getWallText());

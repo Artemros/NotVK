@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
-import java.util.Objects;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/register")
@@ -29,10 +29,10 @@ public class RegistrationController {
     private final UserService userService;
 
     @GetMapping("")
-    public String goToRegistrationPage(Model model){
-        model.addAttribute("name",new String());
-        model.addAttribute("password",new String());
-        model.addAttribute("form",new UserInfo());
+    public String goToRegistrationPage(Model model) {
+        model.addAttribute("name", "");
+        model.addAttribute("password", "");
+        model.addAttribute("form", new UserInfo());
         return "RegistrationForm.html";
     }
 
@@ -42,7 +42,8 @@ public class RegistrationController {
         registeredUser.setName(userInfo.getName());
         registeredUser.setPassword(userInfo.getPassword());
         UserInfo newUser = userService.registerNewUser(registeredUser);
-        logger.info("registred user"+ newUser);
+        registrationService.register(userInfo.getName(),userInfo.getPassword());
+        logger.info("registered user" + newUser);
         return "redirect:/id" + newUser.getId();
     }
 }

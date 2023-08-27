@@ -60,6 +60,8 @@ public class UserInfo {
     private List<WallText> wallText;
 
     @Column
+    private String username;
+    @Column
     private String name;
 
     @Override

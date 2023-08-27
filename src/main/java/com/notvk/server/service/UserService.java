@@ -8,7 +8,6 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,13 +24,14 @@ public class UserService {
     private final WallTextRepository wallTextRepository;
 
 
+
     public List<WallText> getWallTextById(Long id) {
         if (userRepository.findById(id).isPresent()) {
             UserInfo userInfo = userRepository.findById(id).get();
             List<WallText> texts;
             texts = userInfo.getWallText();
             return texts;
-        }else{
+        } else {
             new EntityNotFoundException("User with id " + id + " not found");
         }
         return null;
@@ -58,7 +58,12 @@ public class UserService {
         return userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("User with id " + id + " not found"));
     }
 
-    public UserInfo registerNewUser(UserInfo newUser){
+    public UserInfo getUserByUsername(String username){
+        return userRepository.getUserByUsername(username).orElseThrow(() -> new EntityNotFoundException("User with username " + username + " not found"));
+    }
+
+    public UserInfo registerNewUser(UserInfo newUser) {
         return userRepository.save(newUser);
     }
+
 }

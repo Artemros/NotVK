@@ -30,6 +30,7 @@ public class SecurityConfig {
                 .password(passwordEncoder().encode("adminPass"))
                 .roles("ADMIN")
                 .build();
+
         return new InMemoryUserDetailsManager(user1, user2, admin);
     }
 
@@ -38,46 +39,19 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    //    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http.csrf()
-//                .disable()
-//                .authorizeHttpRequests()
-//                .requestMatchers(new MvcRequestMatcher(new HandlerMappingIntrospector(),"/admin/**"))
-//                .hasRole("ADMIN")
-//                .requestMatchers(new MvcRequestMatcher(new HandlerMappingIntrospector(),"/anonymous*"))
-//                .anonymous()
-//                .requestMatchers(new MvcRequestMatcher(new HandlerMappingIntrospector(),"/login*"))
-//                .permitAll()
-//                .anyRequest()
-//                .authenticated()
-//                .and()
-//                .formLogin()
-////                    .loginPage("/login")
-//////                    .loginProcessingUrl("/login/a");
-//                .defaultSuccessUrl("/id1", true);
-////                    .failureUrl("/login.html?error=true")
-////                    .failureHandler(authenticationFailureHandler());
-////                .and()
-////                .logout()
-////                    .logoutUrl("/perform_logout")
-////                    .deleteCookies("JSESSIONID")
-////                    .logoutSuccessHandler(logoutSuccessHandler());
-//        return http.build();
-//        // ...
-//    }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .formLogin(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults());
+                .httpBasic(Customizer.withDefaults())
+                ;
         return http.build();
     }
 
-
-   /* @Bean
-    public AuthenticationSuccessHandler myAuthenticationSuccessHandler(){
-        return new MySimpleUrlAuthenticationSuccessHandler();
+    public void AddRegisteredUser(String username, String password){
+        User.withUsername(username)
+                .password(passwordEncoder().encode(password))
+                .roles("USER")
+                .build();
     }
-*/
 }

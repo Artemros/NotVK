@@ -20,24 +20,17 @@ public class WallText {
     private Long id;
     @Column(name = "text")
     private String text;
-
-
     @Basic
     @Column(name = "time")
     private java.sql.Timestamp time;
 
-
-    public UserInfo getUser() {
-        return user;
-    }
-
-    public void setUser(UserInfo user) {
-        this.user = user;
-    }
+    @Column(name = "user_id", insertable = false, updatable = false)
+    private Long user;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    private UserInfo user;
+    @JoinColumn(name = "author_id")
+    private UserInfo author;
+
 
     public WallText() {
     }
@@ -58,5 +51,19 @@ public class WallText {
         this.time = time;
     }
 
+    public Long getUser() {
+        return user;
+    }
 
+    public void setUser(Long user) {
+        this.user = user;
+    }
+
+    public UserInfo getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(UserInfo author) {
+        this.author = author;
+    }
 }

@@ -3,6 +3,7 @@ package com.notvk.server.model;
 import jakarta.persistence.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "USERS_INFO")
@@ -63,7 +64,7 @@ public class UserInfo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private List<WallText> wallText;
 
@@ -89,4 +90,40 @@ public class UserInfo {
     @Column
     private String status;
 
+    public List<UserInfo> getFriendList() {
+        return friendList;
+    }
+
+    public void setFriendList(List<UserInfo> friendList) {
+        this.friendList = friendList;
+    }
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "friend_list")
+    private List<UserInfo> friendList;
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        UserInfo userInfo = (UserInfo) o;
+
+        if (!id.equals(userInfo.id)) return false;
+        if (!username.equals(userInfo.username)) return false;
+        if (!name.equals(userInfo.name)) return false;
+        if (!password.equals(userInfo.password)) return false;
+        return Objects.equals(status, userInfo.status);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + username.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + (status != null ? status.hashCode() : 0);
+        return result;
+    }
 }

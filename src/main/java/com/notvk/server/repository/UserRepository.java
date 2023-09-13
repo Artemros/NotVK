@@ -9,4 +9,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends CrudRepository<UserInfo, Long> {
     Optional<UserInfo> getUserByUsername(String username);
+
+    Optional<UserInfo> getUserById(long id);
 }

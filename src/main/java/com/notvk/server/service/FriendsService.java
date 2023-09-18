@@ -27,14 +27,20 @@ public class FriendsService {
     public boolean addFriend(Long userId, Long addedFriendId) {
         UserInfo userById = userRepository.getUserById(userId).orElseThrow(() -> new EntityNotFoundException("User with id " + userId + " not found  in addFriend method(user)"));
         UserInfo friendById = userRepository.getUserById(addedFriendId).orElseThrow(() -> new EntityNotFoundException("User with id " + addedFriendId + " not found in addFriend method(friend)"));
-        List<UserInfo> ids = new ArrayList<>();
+        List<UserInfo> ids = userById.getFriendList();
         ids.add(friendById);
         userById.setFriendList(ids);
         UserInfo saved = userRepository.save(userById);
         return true;
     }
 
-    public boolean deleteFriend(Long deletedFriendId) {
+    public boolean deleteFriend(Long userId, Long deletedFriendId) {
+        UserInfo userById = userRepository.getUserById(userId).orElseThrow(() -> new EntityNotFoundException("User with id " + userId + " not found  in addFriend method(user)"));
+        UserInfo friendById = userRepository.getUserById(deletedFriendId).orElseThrow(() -> new EntityNotFoundException("User with id " + deletedFriendId + " not found in addFriend method(friend)"));
+        List<UserInfo> ids = userById.getFriendList();
+        ids.remove(friendById);
+        userById.setFriendList(ids);
+        UserInfo saved = userRepository.save(userById);
         return true;
     }
 

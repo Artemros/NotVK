@@ -23,40 +23,42 @@ div.friends{
     background-color: lightblue;
     }
 
+
+
 </style>
 <body>
 
 <div th:replace="SideBar.html"></div>
 <div>
 
-</div>
-<div id="smth1" class="friends_sidebar">
-    <nav>
-        <ol style="list-style: none;">
-            <li id="sb_hp">
-                <a href="/">
+
+    <div id="smth1" class="friends_sidebar">
+        <nav>
+            <ol style="list-style: none;">
+                <li id="sb_hp">
+                    <a href="/">
                     <span>
                         My Friends
                     </span>
-                </a>
-            </li>
-            <li id="sb_msg">
-                <a href="/messages">
+                    </a>
+                </li>
+                <li id="sb_msg">
+                    <a href="/messages">
                     <span>
                         New Friends
                     </span>
-                </a>
-            </li>
-            <li id="sb_fl">
-                <a href="/friends">
+                    </a>
+                </li>
+                <li id="sb_fl">
+                    <a href="/friends">
                     <span>
                         Search friends
                     </span>
-                </a>
-            </li>
-        </ol>
-    </nav>
-</div>
+                    </a>
+                </li>
+            </ol>
+        </nav>
+    </div>
 
 </div>
 <div id="smth2" class="friends">
@@ -78,6 +80,22 @@ div.friends{
             </li>
         </ol>
     </nav>
+</div>
+<div class="search_friends">
+    <!--    <div class="search-container">-->
+    <form action="#" th:action="@{/friends/find-friends}" th:object="${form}" method="post">
+        <p><input type="text"  th:field="*{searched}"/></p>
+        <p>
+            <button type="submit" value="Search"><i class="fa fa-search">Search</i></button>
+        </p>
+    </form>
+    <!--    </div>-->
+</div>
+<div class="found_friends">
+    <ul>
+        <li th:each="text : ${listOfUsers}" style="list-style: none;">
+        </li>
+    </ul>
 </div>
 </body>
 </html>

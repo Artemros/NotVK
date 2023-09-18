@@ -69,6 +69,10 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
+    public List<UserInfo> findByName(String name) {
+        return userRepository.findByNameContainingIgnoreCase(name);
+    }
+
     @Transactional
     public List<WallText> addTextOnWallText(WallText wallText, long id, String currentUsername) {
         UserInfo author = getUserByUsername(currentUsername);
